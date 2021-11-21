@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package protobuf;
+
+message Currency{
+  string code = 1;
+  string name = 2;
+  int32 number = 3;
+  string country = 4;
+}
+
+message CurrencyList{
+  repeated Currency items = 1;
+}
+
+message CurrencyRequest{
+  string code = 1;
+  int32 number = 2;
+}
+
+service CurrentService{
+  rpc GetCurrencyList(CurrencyRequest) returns (CurrencyList);
+
+  rpc GetCurrencyStream(CurrencyRequest) returns (stream Currency);
+
+  rpc SaveCurrencyStream(stream Currency) returns (CurrencyList);
+
+  rpc FindCurrencyStream(stream CurrencyRequest) returns (stream Currency);
+}
